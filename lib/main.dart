@@ -11,10 +11,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity),
+      home: Builder(
+        builder: (context) => NowPlaying(
+          maxSlide: MediaQuery.of(context).size.width * 0.85,
+        ),
       ),
-      home: NowPlaying(),
     );
   }
 }
