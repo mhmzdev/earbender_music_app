@@ -244,7 +244,6 @@ class _PlayingPanelState extends State<PlayingPanel> {
   bool isPlaying = false;
   bool isShuffle = false;
   bool isLoop = false;
-  String filePath = "assets/audio/song1.mp3";
 
   @override
   initState() {
@@ -261,7 +260,7 @@ class _PlayingPanelState extends State<PlayingPanel> {
   /// configure the Audio Player
   _setupAudio() {
     // fetch the audio from assets and load it for playing
-    assetsAudioPlayer.open(Audio(filePath),
+    assetsAudioPlayer.open(Audio('assets/audios/song1.mp3'),
         autoStart: false, showNotification: true);
 
     // listener to check whether the Player is playing any audio
@@ -482,7 +481,7 @@ class MyDrawer extends StatefulWidget {
 
 class _MyDrawerState extends State<MyDrawer> {
   // To store file path from local storage
-  List<String> musicFilesList = [];
+  List<File> musicFiles = [];
 
   // To store names of music file and show them in playlist
   List<String> fileNames = [];
@@ -493,7 +492,7 @@ class _MyDrawerState extends State<MyDrawer> {
     // This will get the file name e.g. song.mp3
     String fileName = file.path.split('/').last;
     setState(() {
-      musicFilesList.add(file.path);
+      musicFiles.add(file);
       fileNames.add(fileName);
     });
   }
@@ -526,7 +525,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 children: [
                   Container(
                       margin: EdgeInsets.fromLTRB(0, height * 0.1, 0, 0),
-                      child: getLocalMusic(fileNames)),
+                      child: getLocalMusic(musicFiles)),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
                     child: Row(
@@ -554,10 +553,10 @@ class _MyDrawerState extends State<MyDrawer> {
     );
   }
 
-  Widget getLocalMusic(List<String> listOfMusicFiles) {
+  Widget getLocalMusic(List<File> listOfMusicFiles) {
     return new ListView(
         children: listOfMusicFiles
-            .map((item) => new PlayListTile(songName: item))
+            .map((item) => new PlayListTile(musicFile: item))
             .toList());
   }
 }
