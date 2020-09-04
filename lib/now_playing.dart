@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:earbender/constant.dart';
+import 'package:earbender/widgets/playlist_tile.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
@@ -243,7 +244,7 @@ class _PlayingPanelState extends State<PlayingPanel> {
   bool isPlaying = false;
   bool isShuffle = false;
   bool isLoop = false;
- String filePath = "assets/audio/song1.mp3";
+  String filePath = "assets/audio/song1.mp3";
 
   @override
   initState() {
@@ -480,15 +481,19 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
+  // To store file path from local storage
   List<String> musicFilesList = [];
-  List<String> fileNames = ["Janam Fida-e-Haidri"];
 
+  // To store names of music file and show them in playlist
+  List<String> fileNames = [];
+
+  // Getting local file path and names and adding to respective List
   _gettingLocalMusicFile() async {
-    String mp3File = await FilePicker.getFilePath(type: FileType.audio);
-    File file = await FilePicker.getFile();
+    File file = await FilePicker.getFile(type: FileType.audio);
+    // This will get the file name e.g. song.mp3
     String fileName = file.path.split('/').last;
     setState(() {
-      musicFilesList.add(mp3File);
+      musicFilesList.add(file.path);
       fileNames.add(fileName);
     });
   }
@@ -517,8 +522,11 @@ class _MyDrawerState extends State<MyDrawer> {
               data: ThemeData(
                 accentColor: Colors.grey[600],
               ),
-              child: Column(
+              child: Stack(
                 children: [
+                  Container(
+                      margin: EdgeInsets.fromLTRB(0, height * 0.1, 0, 0),
+                      child: getLocalMusic(fileNames)),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
                     child: Row(
@@ -537,10 +545,6 @@ class _MyDrawerState extends State<MyDrawer> {
                       ],
                     ),
                   ),
-                  Container(
-                      width: width,
-                      height: height * 0.81,
-                      child: getLocalMusic(fileNames)),
                 ],
               ),
             ),
@@ -552,6 +556,8 @@ class _MyDrawerState extends State<MyDrawer> {
 
   Widget getLocalMusic(List<String> listOfMusicFiles) {
     return new ListView(
-        children: listOfMusicFiles.map((item) => new Text(item)).toList());
+        children: listOfMusicFiles
+            .map((item) => new PlayListTile(songName: item))
+            .toList());
   }
 }
