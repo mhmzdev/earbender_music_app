@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity),
       home: Builder(
         builder: (context) => NowPlaying(
-          maxSlide: MediaQuery.of(context).size.width * 0.85,
+          maxSlide: MediaQuery.of(context).size.width * 0.9,
         ),
       ),
     );

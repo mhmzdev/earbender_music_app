@@ -55,7 +55,7 @@ class _NowPlayingState extends State<NowPlaying>
         builder: (context, child) {
           double animValue = _animationController.value;
           final slideAmount = widget.maxSlide * animValue;
-          final contentScale = 1.0 - (0.3 * animValue);
+          final contentScale = 1.0 - (0.7 * animValue);
           return Stack(
             children: <Widget>[
               MyDrawer(),
@@ -116,6 +116,7 @@ class _NowPlayingState extends State<NowPlaying>
     return Material(
       borderRadius: BorderRadius.all(Radius.circular(20)),
       elevation: 4.0,
+      shadowColor: Colors.blue,
       child: SafeArea(
         child: Stack(
           children: [
@@ -238,8 +239,8 @@ class _PlayingPanelState extends State<PlayingPanel> {
   final assetsAudioPlayer = AssetsAudioPlayer();
   Duration totalDuration; // total Duration of the audio
   bool isPlaying = false;
-  var isShuffle = false;
-  var isLoop = false;
+  bool isShuffle = false;
+  bool isLoop = false;
 
   @override
   initState() {
@@ -393,7 +394,7 @@ class _PlayingPanelState extends State<PlayingPanel> {
                         icon: Icon(
                           Icons.shuffle,
                           size: height * 0.025,
-                          color: isShuffle ? Colors.grey[500] : Colors.black,
+                          color: isShuffle ? Colors.black : Colors.grey[500],
                         ),
                         onPressed: () {
                           assetsAudioPlayer.toggleShuffle();
@@ -433,7 +434,7 @@ class _PlayingPanelState extends State<PlayingPanel> {
                     IconButton(
                         icon: Icon(Icons.loop,
                             size: height * 0.025,
-                            color: isLoop ? Colors.grey[500] : Colors.black),
+                            color: isLoop ? Colors.black : Colors.grey[500]),
                         onPressed: () {
                           assetsAudioPlayer.toggleLoop();
                           setState(() {
@@ -478,22 +479,50 @@ class MyDrawer extends StatelessWidget {
 
     return Material(
       color: Colors.white,
+      shadowColor: Colors.blue,
       child: SafeArea(
         child: Theme(
           data: ThemeData(brightness: Brightness.dark),
-          child: Container(            
+          child: Container(
             width: width,
             height: height,
             child: Theme(
               data: ThemeData(
                 accentColor: Colors.grey[600],
               ),
-              child: ListView(
-                padding: EdgeInsets.all(8.0),
+              child: Column(
                 children: [
-                  Text("Earbender",
-                      style: GoogleFonts.lato(
-                          color: Colors.grey[500], fontSize: height * 0.05)),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/headphones.png',
+                          height: height * 0.06,
+                        ),
+                        SizedBox(width: width * 0.02),
+                        Text("Earbender",
+                            style: TextStyle(
+                                color: Colors.grey[700],
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 2.0,
+                                fontSize: height * 0.04)),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: width,
+                    height: height * 0.81,
+                    child: ListView(
+                      padding: const EdgeInsets.all(8.0),
+                      children: [
+                        ListTile(
+                          title: Text("Muhammad Hamza"),
+                          trailing: Text("Hello World"),
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
