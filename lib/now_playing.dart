@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:earbender/constant.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:toast/toast.dart';
 
 class NowPlaying extends StatefulWidget {
@@ -241,6 +243,7 @@ class _PlayingPanelState extends State<PlayingPanel> {
   bool isPlaying = false;
   bool isShuffle = false;
   bool isLoop = false;
+ String filePath = "assets/audio/song1.mp3";
 
   @override
   initState() {
@@ -257,7 +260,7 @@ class _PlayingPanelState extends State<PlayingPanel> {
   /// configure the Audio Player
   _setupAudio() {
     // fetch the audio from assets and load it for playing
-    assetsAudioPlayer.open(Audio('assets/audios/song1.mp3'),
+    assetsAudioPlayer.open(Audio(filePath),
         autoStart: false, showNotification: true);
 
     // listener to check whether the Player is playing any audio
@@ -471,16 +474,40 @@ class _PlayingPanelState extends State<PlayingPanel> {
   }
 }
 
-class MyDrawer extends StatelessWidget {
+class MyDrawer extends StatefulWidget {
+  @override
+  _MyDrawerState createState() => _MyDrawerState();
+}
+
+class _MyDrawerState extends State<MyDrawer> {
+  List<String> musicFilesList = [];
+  List<String> fileNames = ["Janam Fida-e-Haidri"];
+
+  _gettingLocalMusicFile() async {
+    String mp3File = await FilePicker.getFilePath(type: FileType.audio);
+    File file = await FilePicker.getFile();
+    String fileName = file.path.split('/').last;
+    setState(() {
+      musicFilesList.add(mp3File);
+      fileNames.add(fileName);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    return Material(
-      color: Colors.white,
-      shadowColor: Colors.blue,
-      child: SafeArea(
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _gettingLocalMusicFile();
+        },
+        backgroundColor: Colors.white,
+        child: Icon(Icons.folder_open),
+        foregroundColor: Colors.blue,
+      ),
+      body: SafeArea(
         child: Theme(
           data: ThemeData(brightness: Brightness.dark),
           child: Container(
@@ -511,18 +538,9 @@ class MyDrawer extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: width,
-                    height: height * 0.81,
-                    child: ListView(
-                      padding: const EdgeInsets.all(8.0),
-                      children: [
-                        ListTile(
-                          title: Text("Muhammad Hamza"),
-                          trailing: Text("Hello World"),
-                        )
-                      ],
-                    ),
-                  ),
+                      width: width,
+                      height: height * 0.81,
+                      child: getLocalMusic(fileNames)),
                 ],
               ),
             ),
@@ -530,5 +548,10 @@ class MyDrawer extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget getLocalMusic(List<String> listOfMusicFiles) {
+    return new ListView(
+        children: listOfMusicFiles.map((item) => new Text(item)).toList());
   }
 }
