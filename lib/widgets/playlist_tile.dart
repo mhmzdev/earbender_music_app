@@ -50,16 +50,10 @@ class _SongDetailsState extends State<SongDetails>
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     scaleAnimation =
         CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
-
     controller.addListener(() {
       setState(() {});
     });
-
     controller.forward();
-  }
-
-  playAudio() {
-    assetsAudioPlayer.open(Audio.file(widget.songPath), showNotification: true);
   }
 
   @override
@@ -96,10 +90,6 @@ class _SongDetailsState extends State<SongDetails>
                       child: IconButton(
                           color: Colors.black,
                           onPressed: () {                            
-                            setState(() {                              
-                              playAudio();
-                              assetsAudioPlayer.playOrPause();
-                            });
                             Navigator.pop(context);
                           },
                           icon: Icon(

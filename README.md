@@ -1,6 +1,9 @@
 # Earbender - Music App
 
-A concept of Music App developed using Flutter
+A concept of Music App developed using Flutter.
+
+## ScreenShots
+<img src="SS/now_playing.jpg" width=220>  <img src="SS/play_list.jpg" width=220>  <img src="SS/alert_box.jpg" width=220>
 
 ### Packages Used
 
@@ -8,9 +11,6 @@ A concept of Music App developed using Flutter
 - ```assets_audio_player: ^2.0.7+9```
 - ```toast: ^0.1.5```
 - ```file_picker: ^1.13.3```
-
-## ScreenShots
-<img src="SS/home.jpg" width=220>  <img src="SS/playlist.jpg" width=220>  <img src="SS/box.jpg" width=220>
 
 ## Author
 Connect with me on LinkedIn:

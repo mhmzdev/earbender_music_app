@@ -300,7 +300,7 @@ class _PlayingPanelState extends State<PlayingPanel> {
     super.dispose();
   }
 
-  /// configure the Audio Player
+  // configure the Audio Player
   _setupAudio() {
     // fetch the audio from assets and load it for playing
     assetsAudioPlayer.open(Audio('assets/audios/song1.mp3'),
@@ -324,7 +324,7 @@ class _PlayingPanelState extends State<PlayingPanel> {
     });
   }
 
-  /// convert Duration to String with mm:ss formatting
+  // convert Duration to String with mm:ss formatting
   String _formatDurationToString(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
@@ -529,7 +529,7 @@ class _MyDrawerState extends State<MyDrawer> {
   // To store names of music file and show them in playlist
   List<String> fileNames = [];
 
-  // Getting local file path and names and adding to respective List
+  // Getting local file path and file names and adding to respective Lists
   _gettingLocalMusicFile() async {
     File file = await FilePicker.getFile(type: FileType.audio);
     // This will get the file name e.g. song.mp3
