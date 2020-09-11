@@ -12,7 +12,7 @@ A concept of Music App developed using Flutter
 ## ScreenShots
 <img src="SS/home.jpg" width=220>  <img src="SS/playlist.jpg" width=220>  <img src="SS/box.jpg" width=220>
 
-## Authors
+## Author
 Connect with me on LinkedIn:
 
 #### Muhammad Hamza
