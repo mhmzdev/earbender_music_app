@@ -1,16 +1,38 @@
-# earbender
+# Earbender - Music App
 
-A new Flutter project.
+A concept of Music App developed using Flutter
 
-## Getting Started
+### Packages Used
 
-This project is a starting point for a Flutter application.
+- ```google_fonts: ^1.1.0```
+- ```assets_audio_player: ^2.0.7+9```
+- ```toast: ^0.1.5```
+- ```file_picker: ^1.13.3```
 
-A few resources to get you started if this is your first Flutter project:
+## ScreenShots
+<img src="SS/home.jpg" width=220>  <img src="SS/playlist.jpg" width=220>  <img src="SS/box.jpg" width=220>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Authors
+Connect with me on LinkedIn:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### Muhammad Hamza
+[![LinkedIn Link](https://img.shields.io/badge/Connect-Hamza-blue.svg?logo=linkedin&longCache=true&style=social&label=Connect
+)](https://www.linkedin.com/in/m-hamzashakeel)
+
+You can also follow my GitHub Profile to stay updated about my latest projects:
+
+[![GitHub Follow](https://img.shields.io/badge/Connect-Hamza-blue.svg?logo=Github&longCache=true&style=social&label=Follow)](https://github.com/m-hamzashakeel)
+
+If you liked the repo then kindly support it by giving it a star ⭐!
+
+## Contributions Welcome
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](#)
+
+If you find any bug in the code or have any improvements in mind then feel free to generate a pull request.
+
+## Issues
+[![GitHub Issues](https://img.shields.io/github/issues/saadhaxxan/Car_Game_Python_Pygame.svg?style=flat&label=Issues&maxAge=2592000)](https://www.github.com/m-hamzashakeel/Earbender_Music_App/issues)
+
+If you face any issue, you can create a new issue in the Issues Tab and I will be glad to help you out.
+
+Copyright (c) 2020 MUHAMMAD HAMZA

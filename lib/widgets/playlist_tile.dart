@@ -46,7 +46,6 @@ class _SongDetailsState extends State<SongDetails>
   @override
   void initState() {
     super.initState();
-    playAudio();
     controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     scaleAnimation =
@@ -60,7 +59,7 @@ class _SongDetailsState extends State<SongDetails>
   }
 
   playAudio() {
-    assetsAudioPlayer.open(Audio(widget.songPath), showNotification: true);
+    assetsAudioPlayer.open(Audio.file(widget.songPath), showNotification: true);
   }
 
   @override
@@ -96,8 +95,12 @@ class _SongDetailsState extends State<SongDetails>
                       height: height * 0.05,
                       child: IconButton(
                           color: Colors.black,
-                          onPressed: () {
-                            assetsAudioPlayer.playOrPause();
+                          onPressed: () {                            
+                            setState(() {                              
+                              playAudio();
+                              assetsAudioPlayer.playOrPause();
+                            });
+                            Navigator.pop(context);
                           },
                           icon: Icon(
                             Icons.play_arrow,

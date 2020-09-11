@@ -46,35 +46,78 @@ class _NowPlayingState extends State<NowPlaying>
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onHorizontalDragStart: _onDragStart,
-      onHorizontalDragUpdate: _onDragUpdate,
-      onHorizontalDragEnd: _onDragEnd,
-      child: AnimatedBuilder(
-        animation: _animationController,
-        child: mainScreen(),
-        builder: (context, child) {
-          double animValue = _animationController.value;
-          final slideAmount = widget.maxSlide * animValue;
-          final contentScale = 1.0 - (0.7 * animValue);
-          return Stack(
-            children: <Widget>[
-              MyDrawer(),
-              Transform(
-                transform: Matrix4.identity()
-                  ..translate(slideAmount)
-                  ..scale(contentScale, contentScale),
-                alignment: Alignment.centerLeft,
-                child: GestureDetector(
-                  onTap: _animationController.isCompleted ? close : null,
-                  child: child,
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            title: new Text(
+              "Exit Application",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            content: new Text("Are You Sure?"),
+            actions: <Widget>[
+              FlatButton(
+                shape: StadiumBorder(),
+                color: Colors.white,
+                child: new Text(
+                  "Yes",
+                  style: TextStyle(color: Colors.red),
                 ),
+                onPressed: () {
+                  exit(0);
+                },
+              ),
+              FlatButton(
+                shape: StadiumBorder(),
+                color: Colors.white,
+                child: new Text(
+                  "No",
+                  style: TextStyle(color: Colors.blue),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
               ),
             ],
-          );
-        },
+          ),
+        )) ??
+        false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: GestureDetector(
+        onHorizontalDragStart: _onDragStart,
+        onHorizontalDragUpdate: _onDragUpdate,
+        onHorizontalDragEnd: _onDragEnd,
+        child: AnimatedBuilder(
+          animation: _animationController,
+          child: mainScreen(),
+          builder: (context, child) {
+            double animValue = _animationController.value;
+            final slideAmount = widget.maxSlide * animValue;
+            final contentScale = 1.0 - (0.7 * animValue);
+            return Stack(
+              children: <Widget>[
+                MyDrawer(),
+                Transform(
+                  transform: Matrix4.identity()
+                    ..translate(slideAmount)
+                    ..scale(contentScale, contentScale),
+                  alignment: Alignment.centerLeft,
+                  child: GestureDetector(
+                    onTap: _animationController.isCompleted ? close : null,
+                    child: child,
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -224,9 +267,9 @@ class ImageContainer extends StatelessWidget {
             child: Image.asset('assets/images/music.png'),
           ),
           SizedBox(height: height * 0.1),
-          Text("Janam Fida-e-Haideri", style: kSongNameStyle),
+          Text("Memories - Maroon 5", style: kSongNameStyle),
           SizedBox(height: height * 0.03),
-          Text("Shahab Hussain", style: kSingerNameStyle),
+          Text("Maroon 5", style: kSingerNameStyle),
         ],
       ),
     );
