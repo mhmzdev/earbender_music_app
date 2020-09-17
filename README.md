@@ -1,9 +1,13 @@
 # Earbender - Music App
 
-A concept of Music App developed using Flutter.
+A concept of Music App developed using Flutter. Having functionality of playing Audio.
 
 ## ScreenShots
 <img src="SS/now_playing.jpg" width=220>  <img src="SS/play_list.jpg" width=220>  <img src="SS/alert_box.jpg" width=220>
+
+### Drawer Concept
+
+<img src="SS/gif.gif" width=220>
 
 ### Packages Used
 
