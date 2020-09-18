@@ -1,13 +1,17 @@
 import 'dart:io';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:earbender/constant.dart';
+import 'package:earbender/core/utils/constant.dart';
+import 'package:earbender/features/main/presentation/bloc/main_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PlayListTile extends StatelessWidget {
+  final BuildContext blocContext;
   final File musicFile;
-  PlayListTile({this.musicFile});
+
+  PlayListTile({this.musicFile, @required this.blocContext});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +23,7 @@ class PlayListTile extends StatelessWidget {
           showDialog(
               context: context,
               child: SongDetails(
+                  blocContext: blocContext,
                   songPath: musicFile.path,
                   songName: musicFile.path.split('/').last));
         },
@@ -28,9 +33,11 @@ class PlayListTile extends StatelessWidget {
 }
 
 class SongDetails extends StatefulWidget {
+  final BuildContext blocContext;
   final String songName;
   final String songPath;
-  SongDetails({this.songName, this.songPath});
+
+  SongDetails({this.songName, this.songPath, @required this.blocContext});
 
   @override
   _SongDetailsState createState() => _SongDetailsState();
@@ -89,7 +96,10 @@ class _SongDetailsState extends State<SongDetails>
                       height: height * 0.05,
                       child: IconButton(
                           color: Colors.black,
-                          onPressed: () {                            
+                          onPressed: () {
+                            BlocProvider.of<MainBloc>(widget.blocContext).add(
+                                ChangeCurrentMusicEvent(
+                                    musicPath: widget.songPath));
                             Navigator.pop(context);
                           },
                           icon: Icon(

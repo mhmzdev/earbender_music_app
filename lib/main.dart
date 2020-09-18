@@ -1,5 +1,6 @@
-import 'package:earbender/now_playing.dart';
 import 'package:flutter/material.dart';
+
+import 'features/main/presentation/pages/now_playing.dart';
 
 void main() {
   runApp(MyApp());
