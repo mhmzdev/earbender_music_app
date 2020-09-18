@@ -6,6 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toast/toast.dart';
 
 class PlayingPanel extends StatefulWidget {
+  final BuildContext blocContext;
+
+  const PlayingPanel({Key key, this.blocContext}) : super(key: key);
+
   @override
   _PlayingPanelState createState() => _PlayingPanelState();
 }
@@ -76,12 +80,19 @@ class _PlayingPanelState extends State<PlayingPanel> {
     double height = MediaQuery.of(context).size.height;
 
     return BlocListener<MainBloc, MainState>(
+      listenWhen: (prevState, currentState) {
+        print(prevState);
+
+        return true;
+      },
       listener: (context, state) {
+        print(state);
         if (state is UpdateMusic) {
           setState(() {
             _musicPath = state.musicPath;
             _updateAudio();
           });
+          BlocProvider.of<MainBloc>(widget.blocContext).add(ResetEvent());
         }
       },
       child: Align(

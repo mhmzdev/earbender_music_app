@@ -34,8 +34,8 @@ class PlayListTile extends StatelessWidget {
 
 class SongDetails extends StatefulWidget {
   final BuildContext blocContext;
-  final String songName;
-  final String songPath;
+  String songName;
+  String songPath;
 
   SongDetails({this.songName, this.songPath, @required this.blocContext});
 

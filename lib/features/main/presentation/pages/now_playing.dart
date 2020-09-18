@@ -11,8 +11,11 @@ import '../widgets/current_music_image_container_widget.dart';
 import 'my_drawer.dart';
 
 class NowPlaying extends StatefulWidget {
+  final BuildContext blocContext;
   final double maxSlide;
-  NowPlaying({this.maxSlide});
+
+  NowPlaying({this.maxSlide, @required this.blocContext});
+
   @override
   _NowPlayingState createState() => _NowPlayingState();
 
@@ -92,40 +95,37 @@ class _NowPlayingState extends State<NowPlaying>
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => MainBloc(),
-      child: WillPopScope(
-        onWillPop: _onWillPop,
-        child: GestureDetector(
-          onHorizontalDragStart: _onDragStart,
-          onHorizontalDragUpdate: _onDragUpdate,
-          onHorizontalDragEnd: _onDragEnd,
-          child: AnimatedBuilder(
-            animation: _animationController,
-            child: mainScreen(),
-            builder: (context, child) {
-              double animValue = _animationController.value;
-              final slideAmount = widget.maxSlide * animValue;
-              final contentScale = 1.0 - (0.7 * animValue);
-              return Stack(
-                children: <Widget>[
-                  MyDrawer(
-                    blocContext: context,
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: GestureDetector(
+        onHorizontalDragStart: _onDragStart,
+        onHorizontalDragUpdate: _onDragUpdate,
+        onHorizontalDragEnd: _onDragEnd,
+        child: AnimatedBuilder(
+          animation: _animationController,
+          child: mainScreen(),
+          builder: (context, child) {
+            double animValue = _animationController.value;
+            final slideAmount = widget.maxSlide * animValue;
+            final contentScale = 1.0 - (0.7 * animValue);
+            return Stack(
+              children: <Widget>[
+                MyDrawer(
+                  blocContext: widget.blocContext,
+                ),
+                Transform(
+                  transform: Matrix4.identity()
+                    ..translate(slideAmount)
+                    ..scale(contentScale, contentScale),
+                  alignment: Alignment.centerLeft,
+                  child: GestureDetector(
+                    onTap: _animationController.isCompleted ? close : null,
+                    child: child,
                   ),
-                  Transform(
-                    transform: Matrix4.identity()
-                      ..translate(slideAmount)
-                      ..scale(contentScale, contentScale),
-                    alignment: Alignment.centerLeft,
-                    child: GestureDetector(
-                      onTap: _animationController.isCompleted ? close : null,
-                      child: child,
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -178,8 +178,12 @@ class _NowPlayingState extends State<NowPlaying>
             BackgroundColors(),
             customBar(MediaQuery.of(context).size.height,
                 MediaQuery.of(context).size.width),
-            ImageContainer(),
-            PlayingPanel(),
+            ImageContainer(
+              blocContext: widget.blocContext,
+            ),
+            PlayingPanel(
+              blocContext: widget.blocContext,
+            ),
           ],
         ),
       ),
