@@ -31,9 +31,21 @@ dependencies:
   assets_audio_player: ^2.0.7+9
   toast: ^0.1.5
   file_picker: ^1.13.3
+
+  # State Management
   flutter_bloc: ^6.0.5
+
+  # For ease of equating objects that extend Equatable
   equatable: ^1.2.5
+
+  # For Choice based return arguments
   dartz: ^0.9.1
+
+  # For Dependency Injection
+  get_it: ^5.0.0
+
+  # For local storage
+  shared_preferences: ^0.5.10
 
 dev_dependencies:
   flutter_test:

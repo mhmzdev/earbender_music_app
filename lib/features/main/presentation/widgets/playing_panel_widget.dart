@@ -20,7 +20,6 @@ class _PlayingPanelState extends State<PlayingPanel> {
   bool isPlaying = false;
   bool isShuffle = false;
   bool isLoop = false;
-  bool _fromAsset = true;
   String _musicPath = 'assets/audios/song1.mp3';
 
   @override
@@ -76,23 +75,24 @@ class _PlayingPanelState extends State<PlayingPanel> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    // double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
     return BlocListener<MainBloc, MainState>(
       listenWhen: (prevState, currentState) {
-        print(prevState);
-
         return true;
       },
       listener: (context, state) {
-        print(state);
         if (state is UpdateMusic) {
           setState(() {
             _musicPath = state.musicPath;
             _updateAudio();
           });
-          BlocProvider.of<MainBloc>(widget.blocContext).add(ResetEvent());
+          // BlocProvider.of<MainBloc>(widget.blocContext).add(ResetEvent());
+        } else if (state is SaveMusic) {
+          BlocProvider.of<MainBloc>(widget.blocContext)
+              .add(SaveMusicLocallyEvent(musicPath: _musicPath));
+          // BlocProvider.of<MainBloc>(widget.blocContext).add(ResetEvent());
         }
       },
       child: Align(

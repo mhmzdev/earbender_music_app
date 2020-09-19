@@ -13,4 +13,18 @@ class ChangeCurrentMusicEvent extends MainEvent {
   ChangeCurrentMusicEvent({this.musicPath}) : super([musicPath]);
 }
 
+class SaveCurrentMusicEvent extends MainEvent {}
+
+class SaveMusicLocallyEvent extends MainEvent {
+  final String musicPath;
+
+  SaveMusicLocallyEvent({this.musicPath}) : super([musicPath]);
+}
+
+class GetAllSavedMusicPathsEvent extends MainEvent {}
+
+class OpenMainEvent extends MainEvent {}
+
+class OpenSavedMusicEvent extends MainEvent {}
+
 class ResetEvent extends MainEvent {}

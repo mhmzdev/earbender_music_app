@@ -3,8 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'features/main/presentation/bloc/main_bloc.dart';
 import 'features/main/presentation/pages/now_playing.dart';
+import 'injection_container.dart' as di;
+import 'injection_container.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
   runApp(MyApp());
 }
 
@@ -17,7 +21,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity),
       home: BlocProvider(
-        create: (context) => MainBloc(),
+        create: (context) => sl<MainBloc>(),
         child: Builder(
           builder: (context) => NowPlaying(
             blocContext: context,

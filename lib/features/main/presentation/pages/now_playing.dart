@@ -1,14 +1,14 @@
 import 'dart:io';
-import 'package:assets_audio_player/assets_audio_player.dart';
+
 import 'package:earbender/features/main/presentation/bloc/main_bloc.dart';
-import 'package:earbender/features/main/presentation/widgets/playing_panel_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:toast/toast.dart';
+
 import '../../../../core/utils/constant.dart';
 import '../widgets/background_colors_grid_widget.dart';
 import '../widgets/current_music_image_container_widget.dart';
-import 'my_drawer.dart';
+import '../widgets/playing_panel_widget.dart';
+import 'main_page.dart';
 
 class NowPlaying extends StatefulWidget {
   final BuildContext blocContext;
@@ -110,9 +110,7 @@ class _NowPlayingState extends State<NowPlaying>
             final contentScale = 1.0 - (0.7 * animValue);
             return Stack(
               children: <Widget>[
-                MyDrawer(
-                  blocContext: widget.blocContext,
-                ),
+                MainPage(blocContext: widget.blocContext),
                 Transform(
                   transform: Matrix4.identity()
                     ..translate(slideAmount)
@@ -191,6 +189,8 @@ class _NowPlayingState extends State<NowPlaying>
   }
 
   Widget customBar(double height, double width) {
+    bool _isSaved = false;
+
     return Container(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -210,13 +210,37 @@ class _NowPlayingState extends State<NowPlaying>
             textAlign: TextAlign.center,
             style: kHeadingStyle,
           ),
-          IconButton(
-              icon: Icon(
-                Icons.favorite_border,
-                size: height * 0.03,
-                color: Colors.grey[500],
-              ),
-              onPressed: () {})
+          BlocBuilder<MainBloc, MainState>(
+            builder: (context, state) {
+              print("Is Saved: $_isSaved");
+              IconData icon = Icons.favorite_border;
+
+              if (state is UpdateMusic) {
+                _isSaved = state.isSaved;
+                if (state.isSaved) icon = Icons.favorite;
+              } else if (state is Saved) {
+                print("WOT EVEN: ${state.isSaved}");
+                _isSaved = state.isSaved;
+                if (state.isSaved) icon = Icons.favorite;
+              }
+
+              if (_isSaved) {
+                icon = Icons.favorite;
+              }
+
+              return IconButton(
+                icon: Icon(
+                  icon,
+                  size: height * 0.03,
+                  color: Colors.grey[500],
+                ),
+                onPressed: () {
+                  BlocProvider.of<MainBloc>(context)
+                      .add(SaveCurrentMusicEvent());
+                },
+              );
+            },
+          )
         ],
       ),
     );

@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:earbender/features/main/data/datasources/currently_loaded_music_files_singleton.dart';
+import 'package:earbender/features/main/presentation/bloc/main_bloc.dart';
 import 'package:earbender/features/main/presentation/widgets/playlist_tile_widget.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyDrawer extends StatefulWidget {
   final BuildContext blocContext;
@@ -14,8 +17,8 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-  // To store file path from local storage
-  List<File> musicFiles = [];
+  CurrentlyLoadedMusicFilesSingleton musicFilesSingleton =
+      new CurrentlyLoadedMusicFilesSingleton();
 
   // To store names of music file and show them in playlist
   List<String> fileNames = [];
@@ -23,10 +26,11 @@ class _MyDrawerState extends State<MyDrawer> {
   // Getting local file path and file names and adding to respective Lists
   _gettingLocalMusicFile() async {
     File file = await FilePicker.getFile(type: FileType.audio);
+
     // This will get the file name e.g. song.mp3
     String fileName = file.path.split('/').last;
     setState(() {
-      musicFiles.add(file);
+      musicFilesSingleton.musicFiles.add(file);
       fileNames.add(fileName);
     });
   }
@@ -90,6 +94,8 @@ class _MyDrawerState extends State<MyDrawer> {
                       ListTile(
                         title: Text('Saved Music'),
                         onTap: () {
+                          BlocProvider.of<MainBloc>(widget.blocContext)
+                              .add(OpenSavedMusicEvent());
                           Navigator.pop(context);
                         },
                       ),
@@ -121,11 +127,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 data: ThemeData(
                   accentColor: Colors.grey[600],
                 ),
-                child: Stack(
-                  children: [
-                    Container(child: getLocalMusic(width, musicFiles)),
-                  ],
-                ),
+                child: getLocalMusic(width, musicFilesSingleton.musicFiles),
               ),
             ),
           ),
