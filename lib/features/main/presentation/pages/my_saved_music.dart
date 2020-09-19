@@ -69,6 +69,7 @@ class _MySavedMusicState extends State<MySavedMusic> {
             ),
           ),
           body: BlocBuilder<MainBloc, MainState>(
+            // States for loading, error, and loaded (none and > 0)
             cubit: _mainBloc,
             builder: (context, state) {
               if (state is LoadingSavedMusic) {
@@ -100,6 +101,7 @@ class _MySavedMusicState extends State<MySavedMusic> {
         : _noneWidget(width);
   }
 
+  // When the loaded list has no elements
   Widget _noneWidget(double width) {
     return Container(
       child: Center(

@@ -1,3 +1,9 @@
+/*
+
+  Defines all the events that are used as triggers
+
+*/
+
 part of 'main_bloc.dart';
 
 abstract class MainEvent extends Equatable {
@@ -27,4 +33,4 @@ class OpenMainEvent extends MainEvent {}
 
 class OpenSavedMusicEvent extends MainEvent {}
 
-class ResetEvent extends MainEvent {}
+// class ResetEvent extends MainEvent {}

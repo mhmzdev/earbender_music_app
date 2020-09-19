@@ -20,9 +20,14 @@ class _ImageContainerState extends State<ImageContainer> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
 
+    // A bloc listener is only called once unless forced otherwise
     return BlocListener<MainBloc, MainState>(
+      listenWhen: (prevState, current) {
+        return true;
+      },
       listener: (context, state) {
         if (state is UpdateMusic) {
+          // Update current music name when music is updated
           setState(() {
             final String fileName = state.musicPath.split('/').last;
             _songName = state.musicPath

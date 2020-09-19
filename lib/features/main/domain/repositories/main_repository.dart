@@ -1,3 +1,9 @@
+/*
+
+  Abstract definer for the repository functions.
+
+*/
+
 import 'package:dartz/dartz.dart';
 import 'package:earbender/core/error/failures.dart';
 

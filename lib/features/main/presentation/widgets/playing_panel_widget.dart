@@ -84,15 +84,14 @@ class _PlayingPanelState extends State<PlayingPanel> {
       },
       listener: (context, state) {
         if (state is UpdateMusic) {
+          // Update Music File
           setState(() {
             _musicPath = state.musicPath;
             _updateAudio();
           });
-          // BlocProvider.of<MainBloc>(widget.blocContext).add(ResetEvent());
         } else if (state is SaveMusic) {
           BlocProvider.of<MainBloc>(widget.blocContext)
               .add(SaveMusicLocallyEvent(musicPath: _musicPath));
-          // BlocProvider.of<MainBloc>(widget.blocContext).add(ResetEvent());
         }
       },
       child: Align(

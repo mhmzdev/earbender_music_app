@@ -31,4 +31,5 @@ var kHeadingStyle = TextStyle(
     letterSpacing: 2.0,
     fontSize: 18);
 
+// Key in Shared Preferences for all saved music paths
 final String CACHE_SAVED_MUSIC_PATHS = "paths";

@@ -1,3 +1,9 @@
+/*
+
+  Define Trigger Actions and State in 'State Management'
+
+*/
+
 part of 'main_bloc.dart';
 
 abstract class MainState extends Equatable {

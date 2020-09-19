@@ -1,3 +1,9 @@
+/*
+
+  A wrapper to decide what is shown from either 'My Drawer' or 'My Saved Music'
+
+*/
+
 import 'package:earbender/features/main/presentation/bloc/main_bloc.dart';
 import 'package:earbender/features/main/presentation/pages/my_drawer.dart';
 import 'package:earbender/features/main/presentation/pages/my_saved_music.dart';
@@ -12,6 +18,8 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // A Bloc Builder is triggered when the state changes and plays the part
+    // of setState hence the widget can be still defined as stateless without any issues
     return BlocBuilder<MainBloc, MainState>(
       builder: (context, state) {
         if (state is OpenMain) {

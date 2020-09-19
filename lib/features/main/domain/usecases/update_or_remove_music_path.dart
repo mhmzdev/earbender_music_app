@@ -9,6 +9,7 @@ class UpdateOrRemoveMusicPath implements UseCase<bool, MusicParams> {
 
   UpdateOrRemoveMusicPath(this.repository);
 
+  // No need to be implemented as a single type value of true/false is expected
   @override
   Future<Either<Failure, bool>> call(MusicParams params) {
     return null;

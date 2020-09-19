@@ -1,3 +1,13 @@
+/*
+
+  A repository acts as the layer between the Data Sources (Remote and Local) 
+  and the View where all the interaction is handled through interface functions.
+
+  The 'Impl' are concrete and buildup on their counterparts with the same 
+  name but 'Impl' omitted.
+
+*/
+
 import 'package:earbender/core/error/exceptions.dart';
 import 'package:earbender/core/error/failures.dart';
 import 'package:dartz/dartz.dart';
@@ -10,11 +20,13 @@ class MainRepositoryImpl extends MainRepository {
 
   MainRepositoryImpl({@required this.localDataSource});
 
+  // Checks in the local storage for saved path
   @override
   Future<bool> checkIfMusicIsSaved(String path) async {
     return await localDataSource.checkIfMusicIsSaved(path);
   }
 
+  // Get all saved music paths from local storage
   @override
   Future<Either<Failure, List<String>>> getAllSavedMusicPaths() async {
     try {
@@ -25,6 +37,7 @@ class MainRepositoryImpl extends MainRepository {
     }
   }
 
+  // Add/Replace path in local storage
   @override
   Future<bool> updateOrRemoveMusicPath(String path) async {
     return await localDataSource.updateOrRemoveMusicPath(path);

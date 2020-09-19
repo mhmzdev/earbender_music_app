@@ -97,6 +97,7 @@ class _SongDetailsState extends State<SongDetails>
                       child: IconButton(
                           color: Colors.black,
                           onPressed: () {
+                            // Trigger music change event
                             BlocProvider.of<MainBloc>(widget.blocContext).add(
                                 ChangeCurrentMusicEvent(
                                     musicPath: widget.songPath));

@@ -210,20 +210,22 @@ class _NowPlayingState extends State<NowPlaying>
             textAlign: TextAlign.center,
             style: kHeadingStyle,
           ),
+          // For defining the state of the favourite button
           BlocBuilder<MainBloc, MainState>(
             builder: (context, state) {
-              print("Is Saved: $_isSaved");
               IconData icon = Icons.favorite_border;
 
               if (state is UpdateMusic) {
+                // When music updated, check if curernt music was previously cached and if yes then update icon
                 _isSaved = state.isSaved;
                 if (state.isSaved) icon = Icons.favorite;
               } else if (state is Saved) {
-                print("WOT EVEN: ${state.isSaved}");
+                // If saved by clicking after load
                 _isSaved = state.isSaved;
                 if (state.isSaved) icon = Icons.favorite;
               }
 
+              // For persistence
               if (_isSaved) {
                 icon = Icons.favorite;
               }

@@ -7,8 +7,10 @@ import 'injection_container.dart' as di;
 import 'injection_container.dart';
 
 void main() async {
+  // To let flutter know that whereever the injector has been used,
+  // it should initialize all of those, before starting the app fully
   WidgetsFlutterBinding.ensureInitialized();
-  await di.init();
+  await di.init(); // Wait for the injector to finish defining all dependents
   runApp(MyApp());
 }
 

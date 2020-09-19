@@ -91,12 +91,13 @@ class _MyDrawerState extends State<MyDrawer> {
                 Expanded(
                   child: Column(
                     children: [
+                      // Goto 'My Saved Music' screen
                       ListTile(
                         title: Text('Saved Music'),
                         onTap: () {
                           BlocProvider.of<MainBloc>(widget.blocContext)
                               .add(OpenSavedMusicEvent());
-                          Navigator.pop(context);
+                          Navigator.pop(context); // Close Drawer
                         },
                       ),
                       Padding(
@@ -143,7 +144,9 @@ class _MyDrawerState extends State<MyDrawer> {
                 .map((item) => new PlayListTile(
                     blocContext: widget.blocContext, musicFile: item))
                 .toList())
-        : Container(
+        :
+        // None Layout
+        Container(
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

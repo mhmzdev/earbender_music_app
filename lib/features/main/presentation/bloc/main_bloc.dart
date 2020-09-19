@@ -1,3 +1,15 @@
+/*
+
+  Bloc is one of the ways to implement State Management in flutter.
+
+  It uses events as triggers and states as a way performing the action
+  pertaining to the event.
+
+  Listeners that have the same instance of the bloc as their master
+  are all triggered at once when an event is trigerred.
+
+*/
+
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
@@ -13,10 +25,12 @@ part 'main_event.dart';
 part 'main_state.dart';
 
 class MainBloc extends Bloc<MainEvent, MainState> {
+  // Define all required usecases
   final CheckIfMusicIsSaved checkIfMusicIsSaved;
   final GetAllSavedMusicPaths getAllSavedMusicPaths;
   final UpdateOrRemoveMusicPath updateOrRemoveMusicPath;
 
+  // Null check inorder to correctly initialize the usecases
   MainBloc(
       {@required CheckIfMusicIsSaved isSaved,
       @required GetAllSavedMusicPaths allSaved,
@@ -34,28 +48,38 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     MainEvent event,
   ) async* {
     if (event is ChangeCurrentMusicEvent) {
+      // Current Music To be Updated
       bool isSaved = await checkIfMusicIsSaved
           .callNoChoice(MusicParams(path: event.musicPath));
 
       yield UpdateMusic(musicPath: event.musicPath, isSaved: isSaved);
     } else if (event is SaveCurrentMusicEvent) {
+      // Trigger to start save
       yield SaveMusic();
     } else if (event is SaveMusicLocallyEvent) {
+      // Actual save as trigger recepient was a separate widget.
       bool isSaved = await updateOrRemoveMusicPath
           .callNoChoice(MusicParams(path: event.musicPath));
 
       yield Saved(isSaved: isSaved);
     } else if (event is GetAllSavedMusicPathsEvent) {
-      yield LoadingSavedMusic();
+      // Even to load the list of cached paths
+      yield LoadingSavedMusic(); // Show Loading
       final failureOrPaths = await getAllSavedMusicPaths(NoParams());
       yield failureOrPaths.fold(
-          (failure) => Error(), (paths) => LoadedSavedMusic(musicPaths: paths));
+          (failure) => Error(),
+          (paths) => LoadedSavedMusic(
+              musicPaths:
+                  paths)); // Show error if something went wrong else return the list
     } else if (event is OpenMainEvent) {
+      // Open 'My Drawer'
       yield OpenMain();
     } else if (event is OpenSavedMusicEvent) {
+      // Open 'My Saved Music'
       yield OpenSaved();
-    } else if (event is ResetEvent) {
-      yield Initial();
     }
+    // else if (event is ResetEvent) {
+    //   yield Initial();
+    // }
   }
 }
